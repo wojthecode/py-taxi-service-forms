@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+
+  {% if car_model %}
+    <h1>Update Car</h1>
+  {% else %}
+    <h1>Create Car</h1>
+  {% endif %}
+
+  <form action="" method="post" novalidate>
+    {% csrf_token %}
+
+    <label>Model:
+      <input type="text" name="model" required minlength="3" value="{{ car_model }}" class="form-control my-1 mr-sm-2 {{ error|yesno:'is-invalid,' }}">
+
+      {% if error %}
+        <div class="invalid">
+          {{ error }}
+        </div>
+      {% endif %}
+
+    </label>
+
+    <br>
+    <label>Manufacturer:
+      <select name="manufacturer" required class="custom-select d-block my-1 mr-sm-5">
+        {% if manufacturers %}
+          {% for manufacturer in manufacturers %}
+            <option value="{{ manufacturer.id }}" {% if car_manufacturer == manufacturer.id %}selected{% endif %}>
+              {{ manufacturer.name }}
+            </option>
+          {% endfor %}
+        {% else %}
+          <p>Add manufacturers first</p>
+        {% endif %}
+      </select>
+    </label>
+    <br>
+
+    <label>Drivers:<br>
+      <select name="drivers" size="5" multiple class="custom-select d-block my-1 mr-sm-5">
+        {% if drivers %}
+          {% for driver in drivers %}
+            <option value="{{ driver.id }}" {% if driver.id in car_drivers %}selected{% endif %}>
+              {{ driver.first_name }} {{ driver.last_name }}
+            </option>
+          {% endfor %}
+        {% else %}
+          <p>There is no drivers</p>
+        {% endif %}
+      </select>
+    </label>
+    <p style="font-size: 13px; font-style: italic">* Hold ctrl/command to select multiple options</p>
+
+    <table>
+      <tr>
+        <td>
+          <button type="submit" value="submit" class="btn btn-primary rounded-pill px-2 py-0">
+            {% if update %}
+              Update
+            {% else %}
+              Create
+            {% endif %}
+          </button>
+        </td>
+        <td>
+          <a href="{% url 'taxi:car-list' %}">
+            <button type="button" class="btn btn-primary rounded-pill px-2 py-0">
+              Cancel
+            </button>
+          </a>
+        </td>
+      </tr>
+    </table>
+  </form>
+
+{% endblock %}
