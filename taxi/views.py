@@ -1,12 +1,19 @@
 from django.contrib.auth.decorators import login_required
-from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
+from django.http import (
+    HttpRequest,
+    HttpResponse,
+)
 from django.shortcuts import render
-from django.urls import reverse, reverse_lazy
+from django.urls import reverse_lazy
 from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 from taxi.forms import CarForm
-from taxi.models import Driver, Car, Manufacturer
+from taxi.models import (
+    Driver,
+    Car,
+    Manufacturer,
+)
 
 
 @login_required
@@ -66,8 +73,8 @@ class CarDetailView(LoginRequiredMixin, generic.DetailView):
 
 
 class CarCreateView(LoginRequiredMixin, generic.CreateView):
+    model = Car
     form_class = CarForm
-    template_name = "taxi/car_form.html"
 
     def get_success_url(self):
         return reverse_lazy("taxi:car-detail", args=[self.object.pk])
