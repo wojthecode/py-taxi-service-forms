@@ -14,7 +14,6 @@
     <tr>
       <td>
         <form method="get" action="{% url 'taxi:car-update' pk=car.id %}">
-          {% csrf_token %}
           <button type="submit" class="btn btn-primary rounded-pill px-2 py-0 ">
             Update
           </button>
@@ -22,7 +21,6 @@
       </td>
       <td>
         <form method="get" action="{% url 'taxi:car-delete' pk=car.id %}">
-          {% csrf_token %}
           <button type="submit" class="btn btn-primary rounded-pill px-2 py-0 ">
             Delete
           </button>

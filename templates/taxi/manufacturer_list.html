@@ -9,6 +9,8 @@
         <th>ID</th>
         <th>Name</th>
         <th>Country</th>
+        <th>Update</th>
+        <th>Delete</th>
       </tr>
 
       {% for manufacturer in manufacturer_list %}
@@ -25,7 +27,6 @@
 
           <td width=100px>        
             <form method="get" action="{% url 'taxi:manufacturer-update' pk=manufacturer.id %}">
-              {% csrf_token %}
               <button type="submit" class="btn btn-primary rounded-pill px-2 py-0 ">
                 Update
               </button>
@@ -33,7 +34,6 @@
           </td>
           <td width=100px>
             <form method="get" action="{% url 'taxi:manufacturer-delete' pk=manufacturer.id %}">
-              {% csrf_token %}
               <button type="submit" class="btn btn-primary rounded-pill px-2 py-0 ">
                 Delete
               </button>
